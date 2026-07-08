@@ -25,6 +25,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('carreras.index') }}"><i class="fas fa-graduation-cap"></i> Carreras</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('asignaturas.index') }}"><i class="fas fa-book"></i> Asignaturas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('horarios.index') }}"><i class="fas fa-clock"></i> Horarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('horarios.index') }}"><i class="fas fa-clock"></i> Datos personales</a></li>
                 </ul>
             </div>
         </div>
