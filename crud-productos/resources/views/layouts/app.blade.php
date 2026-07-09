@@ -11,21 +11,38 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('escuelas.index') }}">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <i class="fas fa-school"></i> Sistema Escolar
             </a>
+            @auth
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ route('escuelas.index') }}"><i class="fas fa-building"></i> Escuelas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('alumnos.index') }}"><i class="fas fa-users"></i> Alumnos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('personal.index') }}"><i class="fas fa-chalkboard-user"></i> Personal</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('carreras.index') }}"><i class="fas fa-graduation-cap"></i> Carreras</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('asignaturas.index') }}"><i class="fas fa-book"></i> Asignaturas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('horarios.index') }}"><i class="fas fa-clock"></i> Horarios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('horarios.index') }}"><i class="fas fa-clock"></i> Datos personales</a></li>
+                </ul>
+            @endauth
+
+                <ul class="navbar-nav">
+                    @guest
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
+                    @endguest
+                    @auth
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">Panel</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
