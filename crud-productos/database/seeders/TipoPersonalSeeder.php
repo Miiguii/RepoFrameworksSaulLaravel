@@ -11,7 +11,7 @@ class TipoPersonalSeeder extends Seeder
     {
         $tipos = ['Docente', 'Administrativo', 'Directivo', 'Intendencia'];
         foreach ($tipos as $tipo) {
-            TipoPersonal::create(['Nombre' => $tipo]);
+            TipoPersonal::firstOrCreate(['Nombre' => $tipo]);
         }
     }
 }

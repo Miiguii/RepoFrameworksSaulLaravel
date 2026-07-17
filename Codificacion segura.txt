@@ -1,0 +1,154 @@
+1. VALIDACIÓN DE ENTRADAS
+¿Qué es?
+Verificar que todos los datos recibidos cumplan con el formato, tipo, rango y reglas esperadas antes de procesarlos.
+
+Acciones requeridas:
+
+Validar TODOS los datos del usuario (front-end y back-end)
+Comprobar tipos de datos, longitudes, formatos y rangos
+Rechazar datos que no cumplan con las reglas establecidas
+Por qué es crítico:
+Previene datos inválidos en el sistema
+Reduce vulnerabilidades y ataques
+Protege la integridad de la aplicación
+
+2. SANITIZACIÓN DE DATOS
+¿Qué es?
+Limpiar o transformar datos para eliminar contenido peligroso antes de almacenarlos o mostrarlos.
+
+Acciones requeridas:
+Sanitizar antes de guardar información
+Sanitizar antes de mostrar contenido
+Usar librerías confiables para sanitización
+NO construir HTML directamente con datos de usuario
+
+Por qué es crítico:
+Previene ataques Cross-Site-Scripting (XSS)
+Protege a otros usuarios del sistema
+Evita ejecución de código malicioso
+Reduce riesgo de inyección de contenido
+
+Recordatorio clave:
+No todo dato válido es seguro. Después de validar, siempre se debe sanitizar.
+
+3. PROTECCIÓN DE DATOS SENSIBLES
+¿Qué es?
+Proteger información confidencial como contraseñas, claves API, tokens, certificados, cadenas de conexión y llaves privadas.
+Acciones requeridas:
+
+Usar variables de entorno para configuraciones sensibles
+NO subir archivos .env al repositorio
+NO escribir claves o contraseñas en el código fuente
+Rotar claves comprometidas periódicamente
+
+Por qué es crítico:
+
+Evita acceso no autorizado por atacantes
+Protege datos de usuarios
+Reduce riesgo de filtraciones de información
+
+4. PRINCIPIO DE MÍNIMOS PRIVILEGIOS
+¿Qué es?
+Cada usuario, proceso o sistema debe tener únicamente los permisos estrictamente necesarios para realizar su función.
+
+Acciones requeridas:
+
+Diseñar arquitectura con roles y permisos definidos
+Asignar permisos mínimos por defecto
+Revisar y actualizar permisos regularmente
+
+Ejemplo de roles:
+
+ADMIN: Acceso completo (ver, crear, editar, eliminar)
+EDITOR: Puede crear y editar contenido
+LECTOR: Solo consulta
+
+Por qué es crítico:
+
+Reduce riesgo de abuso o acciones maliciosas
+Limita el acceso si una cuenta es comprometida
+Mejora seguridad general del sistema
+Evita modificaciones o accesos innecesarios
+
+5. AUTENTICACIÓN Y AUTORIZACIÓN
+¿Qué es?
+
+Autenticación: Verifica quién eres (identidad)
+Autorización: Determina qué puedes hacer (permisos)
+
+Acciones requeridas:
+Usar contraseñas seguras y cifradas
+Implementar Autenticación Multifactor (MFA)
+Usar tokens seguros con expiración
+Validar permisos en el servidor, NO en el cliente
+Aplicar principio de mínimo privilegio
+Cerrar sesión correctamente
+Registrar intentos de inicio de sesión fallidos
+
+Por qué es crítico:
+
+Asegura que solo usuarios válidos accedan al sistema
+Evita accesos no autorizados
+Protege información y recursos
+Controla acciones según el rol
+
+6. MANEJO DE ERRORES
+¿Qué es?
+Mostrar mensajes de error amigables al usuario y registrar detalles técnicos en logs internos.
+
+Acciones requeridas:
+Mostrar mensajes de error genéricos al usuario
+Registrar errores completos en logs del servidor
+NO exponer rutas, consultas SQL, variables internas o configuraciones
+Usar códigos de referencia para soporte
+Implementar sistema centralizado de logging
+Monitorear y revisar logs periódicamente
+
+Por qué es crítico:
+
+Evita mostrar información del sistema al público
+Reduce riesgo de ataques (SQL Injection, XSS)
+Mejora experiencia de usuario (UX)
+Facilita detección y solución de problemas
+
+7. COMUNICACIÓN SEGURA
+¿Qué es?
+Uso de protocolos y prácticas que protegen la información durante la transmisión entre cliente y servidor.
+
+Acciones requeridas:
+Usar SIEMPRE HTTPS en producción
+Obtener y renovar certificados SSL/TLS confiables
+No permitir redirecciones a HTTP
+Evitar enviar información a canales no seguros
+
+Mantener protocolos y cifrados actualizados
+
+Por qué es crítico:
+
+Protege confidencialidad de los datos
+Evita ataques de escucha (sniffing) o man-in-the-middle
+Genera confianza en los usuarios
+CHECKLIST PARA INTEGRACIÓN EN PROYECTO
+Fase de Diseño
+Definir roles y permisos (mínimos privilegios)
+Planificar validaciones por tipo de dato
+Diseñar sistema de logs y monitoreo
+Configurar entorno de variables seguras
+
+Fase de Desarrollo
+Validar TODAS las entradas de usuario
+Sanitizar TODOS los datos antes de almacenar/mostrar
+Usar variables de entorno para datos sensibles
+Implementar autenticación robusta (MFA recomendado)
+Validar permisos en servidor
+Manejar errores sin exponer información interna
+Usar HTTPS en todos los entornos
+Fase de Pruebas
+Probar inyección de datos maliciosos
+Verificar manejo de errores
+Comprobar acceso según roles
+Validar comunicaciones seguras
+Fase de Producción
+Monitorear logs regularmente
+Rotar claves y certificados
+Actualizar dependencias y protocolos

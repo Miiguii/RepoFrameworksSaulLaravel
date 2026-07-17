@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Carrera;
 use Illuminate\Http\Request;
 
 class CarreraController extends Controller
 {
+    use SanitizesData;
     public function index()
     {
         $carreras = Carrera::paginate(10);
@@ -20,12 +22,12 @@ class CarreraController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'NombreCarreras' => 'required|string|max:50|unique:carreras',
             'Estatus' => 'required|boolean',
-        ]);
+        ]));
 
-        Carrera::create($request->all());
+        Carrera::create($data);
         return redirect()->route('carreras.index')->with('success', 'Carrera creada exitosamente.');
     }
 
@@ -41,12 +43,12 @@ class CarreraController extends Controller
 
     public function update(Request $request, Carrera $carrera)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'NombreCarreras' => 'required|string|max:50|unique:carreras,NombreCarreras,' . $carrera->IdCarrera . ',IdCarrera',
             'Estatus' => 'required|boolean',
-        ]);
+        ]));
 
-        $carrera->update($request->all());
+        $carrera->update($data);
         return redirect()->route('carreras.index')->with('success', 'Carrera actualizada exitosamente.');
     }
 

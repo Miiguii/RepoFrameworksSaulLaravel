@@ -21,6 +21,7 @@ class DatosPersonales extends Model
         'idGenero',
         'Telefono',
         'Email',
+        'CURP',
         'Calle',
         'NumE',
         'idLocalidad',

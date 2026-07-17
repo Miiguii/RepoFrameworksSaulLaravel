@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    use SanitizesData;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -62,6 +64,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $data = $this->sanitizeData($data);
         $role = Role::where('tipo', 'Usuario')->first();
 
         return User::create([

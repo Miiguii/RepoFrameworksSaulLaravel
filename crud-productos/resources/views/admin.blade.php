@@ -8,6 +8,10 @@
                 <div class="card-header bg-danger text-white">Panel de administración</div>
                 <div class="card-body">
                     <p>Solo los usuarios con rol <strong>Administrador</strong> pueden ver esta sección.</p>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-danger">Gestionar usuarios</a>
+                        <a href="{{ url('/home') }}" class="btn btn-secondary">Volver al panel</a>
+                    </div>
                 </div>
             </div>
         </div>

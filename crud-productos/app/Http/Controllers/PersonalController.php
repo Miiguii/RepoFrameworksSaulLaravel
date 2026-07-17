@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Personal;
 use App\Models\TipoPersonal;
 use App\Models\DatosPersonales;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 
 class PersonalController extends Controller
 {
+    use SanitizesData;
     public function index()
     {
         $personal = Personal::with(['tipo', 'datosPersonales'])->paginate(10);
@@ -24,14 +26,14 @@ class PersonalController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'IdDatosP' => 'required|exists:datos_personales,IdDatosP',
             'IdTipo' => 'required|exists:tipos_personal,idTipo',
             'ClaveEmp' => 'required|string|size:10|unique:personal',
             'Status' => 'required|boolean',
-        ]);
+        ]));
 
-        Personal::create($request->all());
+        Personal::create($data);
         return redirect()->route('personal.index')->with('success', 'Personal creado exitosamente.');
     }
 
@@ -50,12 +52,12 @@ class PersonalController extends Controller
 
     public function update(Request $request, Personal $personal)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'IdTipo' => 'required|exists:tipos_personal,idTipo',
             'Status' => 'required|boolean',
-        ]);
+        ]));
 
-        $personal->update($request->all());
+        $personal->update($data);
         return redirect()->route('personal.index')->with('success', 'Personal actualizado exitosamente.');
     }
 

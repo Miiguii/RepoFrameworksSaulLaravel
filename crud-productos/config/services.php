@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'renapo' => [
+        'base_uri' => env('RENAPO_BASE_URI', ''),
+        'api_key' => env('RENAPO_API_KEY', null),
+    ],
+
 ];

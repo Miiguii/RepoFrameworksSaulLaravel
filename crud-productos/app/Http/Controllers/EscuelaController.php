@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Escuela;
 use App\Models\Estado;
 use App\Models\Municipio;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 
 class EscuelaController extends Controller
 {
+    use SanitizesData;
     public function index()
     {
         $escuelas = Escuela::with(['estado', 'municipio', 'localidad'])->paginate(10);
@@ -26,7 +28,7 @@ class EscuelaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'CCT' => 'required|string|size:10|unique:escuelas',
             'Nombre' => 'required|string|max:100',
             'Telefono' => 'required|string|size:10',
@@ -37,9 +39,9 @@ class EscuelaController extends Controller
             'idMunicipio' => 'required|exists:municipios,idMunicipio',
             'idEstado' => 'required|exists:estados,idEstado',
             'CP' => 'required|integer',
-        ]);
+        ]));
 
-        Escuela::create($request->all());
+        Escuela::create($data);
         return redirect()->route('escuelas.index')->with('success', 'Escuela creada exitosamente.');
     }
 
@@ -59,7 +61,7 @@ class EscuelaController extends Controller
 
     public function update(Request $request, Escuela $escuela)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'Nombre' => 'required|string|max:100',
             'Telefono' => 'required|string|size:10',
             'Email' => 'required|email|max:100',
@@ -69,9 +71,9 @@ class EscuelaController extends Controller
             'idMunicipio' => 'required|exists:municipios,idMunicipio',
             'idEstado' => 'required|exists:estados,idEstado',
             'CP' => 'required|integer',
-        ]);
+        ]));
 
-        $escuela->update($request->all());
+        $escuela->update($data);
         return redirect()->route('escuelas.index')->with('success', 'Escuela actualizada exitosamente.');
     }
 

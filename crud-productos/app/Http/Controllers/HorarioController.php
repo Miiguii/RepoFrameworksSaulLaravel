@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Horario;
 use Illuminate\Http\Request;
 
 class HorarioController extends Controller
 {
+    use SanitizesData;
     public function index()
     {
         $horarios = Horario::paginate(10);
@@ -20,14 +22,14 @@ class HorarioController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'Dia' => 'required|string|max:10',
+        $data = $this->sanitizeData($request->validate([
+            'Dia' => 'required|string|in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
             'HorarioInicio' => 'required|date_format:H:i:s',
             'HorarioFin' => 'required|date_format:H:i:s|after:HorarioInicio',
             'Aula' => 'required|string|max:50',
-        ]);
+        ]));
 
-        Horario::create($request->all());
+        Horario::create($data);
         return redirect()->route('horarios.index')->with('success', 'Horario creado exitosamente.');
     }
 
@@ -43,14 +45,14 @@ class HorarioController extends Controller
 
     public function update(Request $request, Horario $horario)
     {
-        $request->validate([
-            'Dia' => 'required|string|max:10',
+        $data = $this->sanitizeData($request->validate([
+            'Dia' => 'required|string|in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
             'HorarioInicio' => 'required|date_format:H:i:s',
             'HorarioFin' => 'required|date_format:H:i:s|after:HorarioInicio',
             'Aula' => 'required|string|max:50',
-        ]);
+        ]));
 
-        $horario->update($request->all());
+        $horario->update($data);
         return redirect()->route('horarios.index')->with('success', 'Horario actualizado exitosamente.');
     }
 

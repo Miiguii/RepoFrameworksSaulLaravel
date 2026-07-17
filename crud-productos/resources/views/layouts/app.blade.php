@@ -26,6 +26,9 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('carreras.index') }}"><i class="fas fa-graduation-cap"></i> Carreras</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('asignaturas.index') }}"><i class="fas fa-book"></i> Asignaturas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('horarios.index') }}"><i class="fas fa-clock"></i> Horarios</a></li>
+                    @if(auth()->check() && auth()->user()->hasRole('Administrador'))
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-user-shield"></i> Usuarios</a></li>
+                    @endif
                 </ul>
             @endauth
 

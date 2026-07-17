@@ -15,7 +15,13 @@
             <td>{{ $item->ClaveEmp }}</td>
             <td>{{ $item->datosPersonales->Nombre ?? 'N/A' }} {{ $item->datosPersonales->ApellidoPaterno ?? '' }}</td>
             <td>{{ $item->tipo->Nombre ?? 'N/A' }}</td>
-            <td>{!! $item->Status ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-danger">Inactivo</span>' !!}</td>
+            <td>
+                @if($item->Status)
+                    <span class="badge bg-success">Activo</span>
+                @else
+                    <span class="badge bg-danger">Inactivo</span>
+                @endif
+            </td>
             <td>
                 <a href="{{ route('personal.show', $item) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                 <a href="{{ route('personal.edit', $item) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>

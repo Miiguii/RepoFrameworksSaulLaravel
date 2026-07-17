@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Asignatura;
 use Illuminate\Http\Request;
 
 class AsignaturaController extends Controller
 {
+    use SanitizesData;
     public function index()
     {
         $asignaturas = Asignatura::paginate(10);
@@ -20,12 +22,12 @@ class AsignaturaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'Nombre' => 'required|string|max:50|unique:asignaturas',
             'HorasTotales' => 'required|integer|min:1|max:500',
-        ]);
+        ]));
 
-        Asignatura::create($request->all());
+        Asignatura::create($data);
         return redirect()->route('asignaturas.index')->with('success', 'Asignatura creada exitosamente.');
     }
 
@@ -41,12 +43,12 @@ class AsignaturaController extends Controller
 
     public function update(Request $request, Asignatura $asignatura)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'Nombre' => 'required|string|max:50|unique:asignaturas,Nombre,' . $asignatura->idAsignatura . ',idAsignatura',
             'HorasTotales' => 'required|integer|min:1|max:500',
-        ]);
+        ]));
 
-        $asignatura->update($request->all());
+        $asignatura->update($data);
         return redirect()->route('asignaturas.index')->with('success', 'Asignatura actualizada exitosamente.');
     }
 

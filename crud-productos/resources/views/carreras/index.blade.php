@@ -12,7 +12,13 @@
         <tr>
             <td>{{ $carrera->IdCarrera }}</td>
             <td>{{ $carrera->NombreCarreras }}</td>
-            <td>{!! $carrera->Estatus ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-danger">Inactivo</span>' !!}</td>
+            <td>
+                @if($carrera->Estatus)
+                    <span class="badge bg-success">Activo</span>
+                @else
+                    <span class="badge bg-danger">Inactivo</span>
+                @endif
+            </td>
             <td>
                 <a href="{{ route('carreras.show', $carrera) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                 <a href="{{ route('carreras.edit', $carrera) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>

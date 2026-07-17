@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\SanitizesData;
 use App\Models\Alumno;
 use App\Models\Carrera;
 use App\Models\DatosPersonales;
@@ -9,6 +10,8 @@ use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
 {
+    use SanitizesData;
+
     public function index()
     {
         $alumnos = Alumno::with(['carrera', 'datosPersonales'])->paginate(10);
@@ -24,14 +27,14 @@ class AlumnoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'Matricula' => 'required|string|size:20|unique:alumnos',
             'IdCarrera' => 'required|exists:carreras,IdCarrera',
             'IdDatosP' => 'required|exists:datos_personales,IdDatosP',
             'Status' => 'required|in:A,B,G',
-        ]);
+        ]));
 
-        Alumno::create($request->all());
+        Alumno::create($data);
         return redirect()->route('alumnos.index')->with('success', 'Alumno creado exitosamente.');
     }
 
@@ -50,12 +53,12 @@ class AlumnoController extends Controller
 
     public function update(Request $request, Alumno $alumno)
     {
-        $request->validate([
+        $data = $this->sanitizeData($request->validate([
             'IdCarrera' => 'required|exists:carreras,IdCarrera',
             'Status' => 'required|in:A,B,G',
-        ]);
+        ]));
 
-        $alumno->update($request->all());
+        $alumno->update($data);
         return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado exitosamente.');
     }
 

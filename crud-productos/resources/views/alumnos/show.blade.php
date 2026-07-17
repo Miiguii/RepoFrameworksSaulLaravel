@@ -33,6 +33,7 @@
                     <tr><th>Género:</th><td>{{ $alumno->datosPersonales->genero->Genero ?? 'N/A' }}</td></tr>
                     <tr><th>Teléfono:</th><td>{{ $alumno->datosPersonales->Telefono ?? 'N/A' }}</td></tr>
                     <tr><th>Email:</th><td>{{ $alumno->datosPersonales->Email ?? 'N/A' }}</td></tr>
+                    <tr><th>CURP:</th><td>{{ $alumno->datosPersonales->CURP ?? 'N/A' }}</td></tr>
                     <tr><th>Dirección:</th><td>{{ $alumno->datosPersonales->Calle ?? '' }} #{{ $alumno->datosPersonales->NumE ?? '' }}, CP {{ $alumno->datosPersonales->CP ?? '' }}</td></tr>
                 </table>
             </div>

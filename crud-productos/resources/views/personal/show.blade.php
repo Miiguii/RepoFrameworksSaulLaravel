@@ -9,7 +9,13 @@
                 <table class="table">
                     <tr><th>Clave:</th><td>{{ $personal->ClaveEmp }}</td></tr>
                     <tr><th>Tipo:</th><td>{{ $personal->tipo->Nombre ?? 'N/A' }}</td></tr>
-                    <tr><th>Status:</th><td>{!! $personal->Status ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-danger">Inactivo</span>' !!}</td></tr>
+                    <tr><th>Status:</th><td>
+                        @if($personal->Status)
+                            <span class="badge bg-success">Activo</span>
+                        @else
+                            <span class="badge bg-danger">Inactivo</span>
+                        @endif
+                    </td></tr>
                 </table>
             </div>
             <div class="col-md-6">
@@ -18,6 +24,7 @@
                     <tr><th>Apellidos:</th><td>{{ $personal->datosPersonales->ApellidoPaterno ?? '' }} {{ $personal->datosPersonales->ApellidoMaterno ?? '' }}</td></tr>
                     <tr><th>Teléfono:</th><td>{{ $personal->datosPersonales->Telefono ?? 'N/A' }}</td></tr>
                     <tr><th>Email:</th><td>{{ $personal->datosPersonales->Email ?? 'N/A' }}</td></tr>
+                    <tr><th>CURP:</th><td>{{ $personal->datosPersonales->CURP ?? 'N/A' }}</td></tr>
                 </table>
             </div>
         </div>
